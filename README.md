@@ -31,7 +31,8 @@ Styles are in `assets/css/styles.css` (design tokens are at the top in `:root`),
 ## Design
 
 - **Palette:** warm stone `#f4f1ec`, ink `#16191c`, brushed brass `#a8834b`, glass `#dfe9ea`
-- **Type:** Instrument Serif (display) + Figtree (text), via Google Fonts
+- **Type:** Figtree (sans-serif) throughout, via Google Fonts
+- **Logo:** `assets/img/logo.svg` (inverted with a CSS filter in the dark footer)
 - **Motif:** translucent "glass pane" overlays, a nod to the product itself
 
 ## To do before launch
