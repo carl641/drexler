@@ -42,6 +42,32 @@
     reveals.forEach((el) => el.classList.add('is-in'));
   }
 
+  // Tall photos that pan through their full height inside the frame as you scroll
+  const pans = document.querySelectorAll('[data-scroll-pan]');
+  if (pans.length && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      const vh = window.innerHeight;
+      pans.forEach((fig) => {
+        const img = fig.querySelector('img');
+        const box = fig.getBoundingClientRect();
+        const travel = img.offsetHeight - box.height;
+        if (travel <= 0) return;
+        // 0 when the frame enters at the bottom of the viewport, 1 when it leaves at the top
+        const p = Math.min(1, Math.max(0, (vh - box.top) / (vh + box.height)));
+        const y = -travel * p;
+        fig.style.setProperty('--pan', y + 'px');
+        img.style.transform = 'translate3d(0,' + y + 'px,0)';
+      });
+    };
+    const req = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
+    window.addEventListener('scroll', req, { passive: true });
+    window.addEventListener('resize', req);
+    pans.forEach((fig) => fig.querySelector('img').addEventListener('load', req));
+    update();
+  }
+
   // Testimonial slider
   document.querySelectorAll('[data-slider]').forEach((slider) => {
     const slides = slider.querySelectorAll('.t-slide');
